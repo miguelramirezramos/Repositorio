@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Menu</title>
+	<style type="text/css">
+		input{
+			margin-bottom: 5px;
+			width:200px;
+			color:#2D4167;
+			font-size:13px;
+		}
+
+		input:hover {
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Menú</h1>
+	<form name="frmMenu">
+		<input type="button" name="btnAltaUsuario" value="Alta Usuario"  onclick="altaUsuario();"/><br>
+		<input type="button" name="btnAltaArticulo" value="Alta Articulo"  onclick="altaArticulo();"/><br>
+		<input type="button" name="btnAltaPrestamo" value="Alta Prestamo"  onclick="altaPrestamo();"/><br>
+		<input type="button" name="btnDevolverPrestamo" value="Devolver Prestamo"  onclick="devolverPrestamo();"/><br>
+		<input type="button" name="btnListadoUsuarios" value="Listar Usuarios"  onclick="listarUsuarios();"/><br>
+		<input type="button" name="btnListadoArticulos" value="Listar Articulos"  onclick="listarArticulos();"/><br>
+		<input type="button" name="btnListadoPrestamos" value="Listar Prestamos por Fecha"  onclick="listarPrestamos();"/><br>
+		<input type="button" name="btnListadoPrestamosUsuario" value="Listar Prestamos del Usuario"  onclick="listarPrestamosUsuario();"/><br>
+		<input type="button" name="btnListadoTipoArticulos" value="Listar Tipos de Articulos"  onclick="listarArticulosPorTipo();"/><br>
+	</form>
+
+
+<script type="text/javascript" src="js/objetos.js"></script>
+<script type="text/javascript" src="js/principal.js"></script>
+</body>
+
+</html>

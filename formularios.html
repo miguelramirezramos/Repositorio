@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>Formularios</title>
+
+    <style type="text/css">
+
+        #altaUsuario, #altaArticulo, #altaPrestamo, #devolverPrestamo, #listarPrestamosFecha, #listarPrestamosUsuario, #listarArticulosPorTipo, .fondo {
+            display: none;
+        }
+
+        .form label {
+            width: 120px;
+            display: block;
+            float: left;
+            text-align: right;
+        }
+
+        #form label {
+            width: 180px;
+            display: block;
+            float: left;
+            text-align: right;
+        }
+
+        input {
+            margin-bottom: 5px;
+        }
+
+        select {
+            margin-bottom: 5px;
+            width: 250px;
+        }
+
+        select:hover {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        input:hover {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .fondo {
+            background-color: rgba(136, 136, 136, 0.6);
+            position: absolute;
+            min-height: 95%;
+            min-width: 97%;
+        }
+
+        .dentro {
+            background-color: lightblue;
+            z-index: 3;
+            width: 70%;
+            padding: 10px;
+            border: dashed 2px blue;
+            margin: 20% auto;
+            text-align: center;
+        }
+    </style>
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <!--SCRIPT PARA DATEPICKER-->
+    <script>
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '<Ant',
+            nextText: 'Sig>',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+        $(function () {
+            $(".fechas").datepicker();
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+<div class="fondo" id="fondo">
+    <div class="dentro" id="dentro">
+    </div>
+</div>
+
+<!--FORMULARIO PARA DAR DE ALTA USUARIOS-->
+<h1>Formularios</h1>
+<div id="altaUsuario">
+    <form class="form" name="frmAltaUsuario">
+        <fieldset>
+            <legend><strong>Datos de Usuario</strong></legend>
+            <label>IdUsuario:&nbsp;</label>
+            <input type="text" name="txtIdUsuario"/><br/>
+            <label>Nombre:&nbsp;</label>
+            <input type="text" name="txtNombre"/><br/>
+            <label>Apellidos:&nbsp;</label>
+            <input type="text" name="txtApellidos"/><br/>
+            <label>Telefono:&nbsp;</label>
+            <input type="text" maxlength="9" name="txtTelefono"/><br/>
+            <input type="button" name="btnAceptarAltaUsuario" value="Aceptar"
+                   onclick="top.frames[1][1].aceptarAltaUsuario();">
+        </fieldset>
+    </form>
+</div>
+
+<!--FORMULARIO PARA DAR DE ALTA ARTICULOS-->
+<div id="altaArticulo">
+    <form class="form" name="frmAltaArticulo">
+        <fieldset>
+            <legend><strong>Datos de Articulos</strong></legend>
+            <input type="radio" checked="checked" name="rbtTipo" onclick="toggle(this)" value="libro">Libro
+            <input type="radio" name="rbtTipo" onclick="toggle(this)" value="dvd">DVD<br>
+
+            <label>IdArticulo:&nbsp;</label>
+            <input type="text" name="txtIdArticulo"/><br/>
+            <label>Titulo:&nbsp;</label>
+            <input type="text" name="txtTitulo"/><br/>
+
+
+            <div id="libro" style="display:block">
+                <label>Autor:&nbsp;</label>
+                <input type="text" name="txtAutor"/><br/>
+                <label>Paginas:&nbsp;</label>
+                <input type="text" name="txtPaginas"/><br/>
+            </div>
+
+            <div id="dvd" style="display:none">
+                <label for="fecha">Fecha de Estreno:&nbsp;</label>
+                <input type="date" name="txtFechaEstreno" class="fechas" id="fecha" value=""/><br/>
+                </label>
+                <input type="checkbox" name="subtitulada" value="Subtitulada">Subtitulada<br/>
+            </div>
+
+
+            <input type="button" name="btnAceptarAltaArticulo" value="Aceptar"
+                   onclick="top.frames[1][1].aceptarAltaArticulo();">
+        </fieldset>
+    </form>
+</div>
+
+<!--FORMULARIO PARA REALIZAR PRESTAMOS-->
+<div id="altaPrestamo">
+    <form class="form" name="frmAltaPrestamo">
+        <fieldset>
+            <legend><strong>Datos de Prestamo</strong></legend>
+
+            <label>Usuario:&nbsp;</label>
+            <!-- <input type="text" name="txtIdUsuario"/><br/>-->
+            <select type="text" name="txtIdUsuario" id="usuario">
+                <option>Usuarios</option>
+            </select><br/>
+
+            <label>Articulos:&nbsp;</label>
+            <select multiple="multiple" type="text" name="listaArticulos">
+                <option style="color:red">nada</option>
+            </select><br/>
+
+            <label>IdPrestamo:&nbsp;</label>
+            <input type="text" name="txtIdPrestamo"/><br/>
+            <label>Fecha de Inicio:&nbsp;</label>
+            <input type="date" name="txtFechaInicio" class="fechas" id="fechaInicio" value="" disabled/><br/>
+            <label>Fecha de Fin:&nbsp;</label>
+            <input type="date" name="txtFechaFin" class="fechas" value=""/><br/>
+
+
+            <input type="button" name="btnAceptarAltaPrestamo" value="Aceptar"
+                   onclick="top.frames[1][1].aceptarAltaPrestamo();">
+        </fieldset>
+    </form>
+</div>
+
+<!--FORMULARIO PARA DEVOLVER PRESTAMOS-->
+<div id="devolverPrestamo">
+    <form class="form" name="frmDevolverPrestamo">
+        <fieldset>
+            <legend><strong>Datos de Prestamo a Devolver</strong></legend>
+
+            <label>ID Prestamo:&nbsp;</label>
+            <input type="text" name="txtIdPrestamo"/><br/>
+
+            <input type="button" name="btnAceptarDevolverPrestamo" value="Aceptar"
+                   onclick="top.frames[1][1].aceptarDevolverPrestamo();">
+        </fieldset>
+    </form>
+</div>
+
+<!--FORMULARIO PARA LISTAR PRESTAMOS POR FECHA-->
+<div id="listarPrestamosFecha">
+    <form class="form" name="frmListarPrestamosFecha">
+        <fieldset>
+            <legend><strong>Datos del Prestamo</strong></legend>
+
+            <label>Fecha de Inicio:&nbsp;</label>
+            <input type="date" name="txtFechaInicio" class="fechas" value=""/><br/>
+            <label>Fecha de Fin:&nbsp;</label>
+            <input type="date" name="txtFechaFin" class="fechas" value=""/><br/>
+
+            <input type="button" name="btnAceptarListarPrestamosFecha" value="Aceptar"
+                   onclick="top.frames[1][1].aceptarListarPrestamosFecha();">
+        </fieldset>
+    </form>
+</div>
+
+<!--FORMULARIO PARA LISTAR PRESTAMOS POR USUARIO-->
+<div id="listarPrestamosUsuario">
+    <form id="form" name="frmListarPrestamosUsuario">
+        <fieldset>
+            <legend><strong>Datos del Usuario</strong></legend>
+
+            <label>ID del Usuario a consultar:&nbsp;</label>
+            <input type="text" name="txtIdUsuario"/><br/>
+
+            <input type="button" name="btnAceptarListarPrestamosUsuario" value="Aceptar"
+                   onclick="top.frames[1][1].aceptarListarPrestamosUsuario();">
+        </fieldset>
+    </form>
+</div>
+
+
+<!--FORMULARIO PARA LISTAR PRESTAMOS PORUSUARIO-->
+<div id="listarArticulosPorTipo">
+    <form class="form" name="frmListarArticulosPorTipo">
+        <fieldset>
+            <legend><strong>Datos del Articulo</strong></legend>
+            <label>Tipo del articulo:&nbsp;</label>
+            <input type="radio" checked="checked" name="rbtTipo" value="libro">Libro
+            <input type="radio" name="rbtTipo" value="dvd">DVD<br>
+
+            <input type="button" name="btnAceptarListarArticulosPorTipo" value="Aceptar"
+                   onclick="top.frames[1][1].aceptarListarArticulosPorTipo();">
+        </fieldset>
+    </form>
+</div>
+
+<!--SCRIPT QUEMUESTRA EL FORMULARIO PARA LIBROS O DVDs-->
+<script type="text/javascript">
+    function toggle(elemento) {
+        if (elemento.value == "libro") {
+            document.getElementById("libro").style.display = "block";
+            document.getElementById("dvd").style.display = "none";
+        } else {
+            if (elemento.value == "dvd") {
+                document.getElementById("libro").style.display = "none";
+                document.getElementById("dvd").style.display = "block";
+                var f = new Date();
+                var actual = (f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear());
+                document.getElementById("fecha").value = actual;
+            }
+        }
+    }
+</script>
+
+<!--SCRIPT QUE INTRODUCE LA FECHA ACTUAL EN LOS INPUT-->
+<script type="text/JavaScript">
+    var f = new Date();
+    var actual = (f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear());
+    document.getElementById("fechaInicio").value = actual;
+</script>
+
+<script type="text/javascript">
+    var oBoton1 = document.frmAltaUsuario.btnAceptarAltaUsuario;
+    oBoton1.onclick = validarDatosUsuario;
+    function validarDatosUsuario() {
+        var bValido = true;
+        for (i = 0; i < document.frmAltaUsuario.elements.length; i++) {
+            if (document.frmAltaUsuario.elements[i].value == "") {
+                document.frmAltaUsuario.elements[i].style.backgroundColor = "palevioletred";
+                bValido = false;
+            }
+            else {
+                document.frmAltaUsuario.elements[i].style.backgroundColor = "white";
+            }
+        }
+        if (bValido == true) {
+            //Enviamos el formulario
+            top.frames[1][1].aceptarAltaUsuario();
+        }
+        return bValido;
+    }
+
+    var oBoton2 = document.frmAltaPrestamo.btnAceptarAltaPrestamo;
+    oBoton2.onclick = validarDatosAltaPrestamo;
+    function validarDatosAltaPrestamo() {
+        var bValido = true;
+        for (i = 0; i < document.frmAltaPrestamo.elements.length; i++) {
+            if (document.frmAltaPrestamo.elements[i].value == "") {
+                document.frmAltaPrestamo.elements[i].style.backgroundColor = "palevioletred";
+                bValido = false;
+            }
+            else {
+                document.frmAltaPrestamo.elements[i].style.backgroundColor = "white";
+            }
+        }
+        if (bValido == true) {
+            //Enviamos el formulario
+            top.frames[1][1].aceptarAltaPrestamo();
+        }
+        return bValido;
+    }
+
+    var oBoton3 = document.frmDevolverPrestamo.btnAceptarDevolverPrestamo;
+    oBoton3.onclick = validarDatosDevolverPrestamo;
+    function validarDatosDevolverPrestamo() {
+        var bValido = true;
+        if (document.frmDevolverPrestamo.elements[1].value == "") {
+            document.frmDevolverPrestamo.elements[1].style.backgroundColor = "palevioletred";
+            bValido = false;
+        }
+        else {
+            document.frmDevolverPrestamo.elements[1].style.backgroundColor = "white";
+        }
+        if (bValido == true) {
+            //Enviamos el formulario
+            top.frames[1][1].aceptarDevolverPrestamo();
+        }
+        return bValido;
+    }
+
+    var oBoton4 = document.frmListarPrestamosFecha.btnAceptarListarPrestamosFecha;
+    oBoton4.onclick = validarDatosPrestamosFecha;
+    function validarDatosPrestamosFecha() {
+        var bValido = true;
+        for (i = 0; i < document.frmListarPrestamosFecha.elements.length; i++) {
+            if (document.frmListarPrestamosFecha.elements[i].value == "") {
+                document.frmListarPrestamosFecha.elements[i].style.backgroundColor = "palevioletred";
+                bValido = false;
+            }
+            else {
+                document.frmListarPrestamosFecha.elements[i].style.backgroundColor = "white";
+            }
+        }
+        if (bValido == true) {
+            //Enviamos el formulario
+            top.frames[1][1].aceptarListarPrestamosFecha();
+        }
+        return bValido;
+    }
+
+    var oBoton5 = document.frmListarPrestamosUsuario.btnAceptarListarPrestamosUsuario;
+    oBoton5.onclick = validarDatosListarPrestamoUsuario;
+    function validarDatosListarPrestamoUsuario() {
+        var bValido = true;
+        if (document.frmListarPrestamosUsuario.elements[1].value == "") {
+            document.frmListarPrestamosUsuario.elements[1].style.backgroundColor = "palevioletred";
+            bValido = false;
+        }
+        else {
+            document.frmListarPrestamosUsuario.elements[1].style.backgroundColor = "white";
+        }
+        if (bValido == true) {
+            //Enviamos el formulario
+            top.frames[1][1].aceptarListarPrestamosUsuario();
+        }
+        return bValido;
+    }
+
+
+    function volverMenu() {
+        document.getElementById("fondo").style.display = "none";
+        document.frmAltaUsuario.reset();
+        document.frmDevolverPrestamo.reset();
+        document.frmListarPrestamosFecha.reset();
+        document.frmListarPrestamosUsuario.reset();
+        document.frmListarArticulosPorTipo.reset();
+        var oForm = top.frames[1][1].document.frmMenu;
+        oForm.btnAltaUsuario.disabled = !oForm.btnAltaUsuario.disabled;
+        oForm.btnAltaArticulo.disabled = !oForm.btnAltaArticulo.disabled;
+        oForm.btnAltaPrestamo.disabled = !oForm.btnAltaPrestamo.disabled;
+        oForm.btnDevolverPrestamo.disabled = !oForm.btnDevolverPrestamo.disabled;
+        oForm.btnListadoUsuarios.disabled = !oForm.btnListadoUsuarios.disabled;
+        oForm.btnListadoArticulos.disabled = !oForm.btnListadoArticulos.disabled;
+        oForm.btnListadoPrestamos.disabled = !oForm.btnListadoPrestamos.disabled;
+        oForm.btnListadoPrestamosUsuario.disabled = !oForm.btnListadoPrestamosUsuario.disabled;
+        oForm.btnListadoTipoArticulos.disabled = !oForm.btnListadoTipoArticulos.disabled;
+    }
+</script>
+</body>
+
+</html>
